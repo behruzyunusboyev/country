@@ -4,7 +4,9 @@ function GetCountry() {
     const [country, setCountry] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [region, setRegion] = useState("");
+    const [search, setSearch] = useState("");
+    const [borders, setBorders] = useState("");
     const getCountryData = async () => {
         try {
             setLoading(true);
@@ -31,35 +33,42 @@ function GetCountry() {
     if (loading) return <div>Yuklanmoqda...</div>;
     if (error) return <div>Xato: {error}</div>;
     
-    function setCountryContinents(continent) {
-        const filteredCountries = country.filter(item => item.continents && item.continents[0] === continent);
-        setCountry(filteredCountries);
-        continent ==''
-    }
-    function setCountryNmae(name) {
-        const filteredCountries = country.filter(item => item.name.common === name);
-        setCountry(filteredCountries);
-    }
-    function setCountryBorders(border) {
-        const filteredCountries = country.filter(item => item.borders && item.borders.includes(border));
-        setCountry(filteredCountries);
-    }
+    const filterregion = country.filter((item) => {
+        const sellectregion = region === "" || item.continents.includes(region);
+        return sellectregion;
+    })
+    const filtersearch = country.filter((item) => {
+        const sellectsearch = search === "" || item.name.common.toLowerCase().includes(search.toLowerCase());
+        return sellectsearch;
+    })
+    const filterborders = country.filter((item) => {
+        const sellectborders = borders === "" || item.borders.includes(borders);
+        return sellectborders;
+    })
+    const filters = filterregion.filter(item => filtersearch.includes(item)).filter(item => filterborders.includes(item));
     return (
+        <div className="main">
+            <div className="nav">
+                <div className="Nav">
+                    <input type="text" name="" id="search" onChange={(e) => setSearch(e.target.value)}/>
+                <form action="">
+                    <select name="country" id="sellect" onChange={(e) => setRegion(e.target.value)}>
+                        <option value="">Barcha qit'alar</option>
+                        <option value="Asia">Asia</option>
+                        <option value="Europe">Europe</option>
+                        <option value="North America">North America</option>
+                        <option value="South America">South America</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Oceania">Oceania</option>
+                    </select>
+                </form></div>
+                
+            </div>
         <div id="item">
-            <form action="">
-                <select name="country" id="" onChange={(e) => setCountryContinents(e.target.value)}>
-                   
-                    <option value="Asia">Asia</option>
-                    <option value="Europe">Europe</option>
-                    <option value="North America">North America</option>
-                    <option value="South America">South America</option>
-                    <option value="Africa">Africa</option>
-                    <option value="Oceania">Oceania</option>
-                </select>
-            </form>
-            {country.map(item =>{
+            
+            {filters.map(item =>{
                 return(
-                    <div key={item.name.common} className="card" onClick={() =>  setCountryBorders(item.borders ? item.borders[0] : "")}>
+                    <div key={item.name.common} className="card" onClick={() => setBorders(item.borders ? item.borders[0] : "")}>
                         <img src={item.flags.svg} alt={item.name.common} className="flag" />
                         <h3>nomi {item.name.common}</h3>
                         <p><strong>Poytaxt:</strong> {item.capital ? item.capital[0] : "N/A"}</p>
@@ -69,6 +78,8 @@ function GetCountry() {
                 )
             } ) }
         </div>
+        </div>
+        
     )
 }
 

@@ -1,3 +1,10 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
 #item{
     width: 100%;
     display: grid;
@@ -22,4 +29,45 @@
     justify-content: center;
     align-items: center;
     border-radius: 15px;
+}
+.Nav{
+    top: 0;
+    position: fixed;
+    height: 60px;
+    background-color: #f0f0f0;
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border-radius: 15px; 
+}
+.nav{
+    top: 0;
+    position: relative;
+    height: 60px;
+    /* background-color: #f0f0f0; */
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border-radius: 15px; 
+}
+#sellect{
+    position: relative;
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    font-size: 20px;
+}
+#search{
+    position: relative;
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
 }
